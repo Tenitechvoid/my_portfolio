@@ -1,0 +1,734 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Teniola Jimoh — Cinematographer & Drone Pilot</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500&family=Space+Mono:ital@0;1&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --ink:     #0A0A0B;
+    --smoke:   #131316;
+    --steel:   #1E1E24;
+    --mist:    #8A8A99;
+    --paper:   #E8E4DA;
+    --horizon: #C8A96E;   /* warm amber — the "golden hour" accent */
+    --sky:     #3A6EA8;   /* deep aerial blue */
+    --white:   #F4F2EE;
+
+    --display: 'Bebas Neue', sans-serif;
+    --body:    'Inter', sans-serif;
+    --mono:    'Space Mono', monospace;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--ink);
+    color: var(--white);
+    font-family: var(--body);
+    font-weight: 300;
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 1.4rem 4rem;
+    mix-blend-mode: normal;
+    background: linear-gradient(to bottom, rgba(10,10,11,.9) 0%, transparent 100%);
+  }
+  .nav-logo {
+    font-family: var(--mono);
+    font-size: .75rem;
+    letter-spacing: .2em;
+    color: var(--horizon);
+    text-transform: uppercase;
+  }
+  .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+  .nav-links a {
+    font-family: var(--mono);
+    font-size: .7rem;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+    color: var(--mist);
+    text-decoration: none;
+    transition: color .2s;
+  }
+  .nav-links a:hover { color: var(--white); }
+
+  /* ── HERO ── */
+  .hero {
+    position: relative;
+    height: 100vh; min-height: 680px;
+    display: flex; flex-direction: column; justify-content: flex-end;
+    padding: 0 4rem 5rem;
+    overflow: hidden;
+  }
+
+  /* Simulated cinematic sky — gradient + lens-flare orbs */
+  .hero-bg {
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 60% 55% at 72% 28%, rgba(58,110,168,.35) 0%, transparent 65%),
+      radial-gradient(ellipse 40% 40% at 20% 80%, rgba(200,169,110,.12) 0%, transparent 60%),
+      linear-gradient(175deg, #0D1B2E 0%, #0A0A0B 55%, #13100A 100%);
+  }
+  /* Horizon glow — the signature element */
+  .horizon-line {
+    position: absolute;
+    bottom: 28%;
+    left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent 0%, var(--horizon) 30%, var(--sky) 60%, transparent 100%);
+    opacity: .55;
+  }
+  .horizon-glow {
+    position: absolute;
+    bottom: calc(28% - 40px);
+    left: 0; right: 0;
+    height: 80px;
+    background: linear-gradient(to top,
+      rgba(200,169,110,.08) 0%,
+      rgba(58,110,168,.06) 60%,
+      transparent 100%);
+  }
+
+  /* Crosshair drone HUD overlay */
+  .hud {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: min(380px, 55vw);
+    height: min(380px, 55vw);
+    opacity: .12;
+    pointer-events: none;
+  }
+  .hud svg { width: 100%; height: 100%; }
+
+  .hero-eyebrow {
+    font-family: var(--mono);
+    font-size: .68rem;
+    letter-spacing: .3em;
+    text-transform: uppercase;
+    color: var(--horizon);
+    margin-bottom: 1rem;
+    position: relative;
+  }
+  .hero-headline {
+    font-family: var(--display);
+    font-size: clamp(4.5rem, 11vw, 10rem);
+    line-height: .93;
+    letter-spacing: .01em;
+    color: var(--white);
+    position: relative;
+    max-width: 14ch;
+  }
+  .hero-headline em {
+    font-style: normal;
+    color: var(--horizon);
+  }
+  .hero-sub {
+    margin-top: 1.8rem;
+    max-width: 42ch;
+    font-size: 1rem;
+    line-height: 1.6;
+    color: var(--mist);
+    position: relative;
+  }
+  .hero-ctas {
+    display: flex; gap: 1.2rem; align-items: center;
+    margin-top: 2.4rem;
+    position: relative;
+  }
+  .btn-primary {
+    display: inline-block;
+    padding: .8rem 2rem;
+    background: var(--horizon);
+    color: var(--ink);
+    font-family: var(--mono);
+    font-size: .72rem;
+    letter-spacing: .2em;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: opacity .2s;
+  }
+  .btn-primary:hover { opacity: .85; }
+  .btn-ghost {
+    display: inline-block;
+    padding: .8rem 2rem;
+    border: 1px solid rgba(138,138,153,.4);
+    color: var(--mist);
+    font-family: var(--mono);
+    font-size: .72rem;
+    letter-spacing: .2em;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: border-color .2s, color .2s;
+  }
+  .btn-ghost:hover { border-color: var(--white); color: var(--white); }
+
+  /* ── REEL STRIP ── */
+  .reel {
+    background: var(--smoke);
+    padding: 5rem 4rem;
+    border-top: 1px solid rgba(255,255,255,.05);
+  }
+  .reel-label {
+    font-family: var(--mono);
+    font-size: .65rem;
+    letter-spacing: .3em;
+    text-transform: uppercase;
+    color: var(--horizon);
+    margin-bottom: 2.5rem;
+  }
+  .reel-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+  }
+  .reel-cell {
+    position: relative;
+    aspect-ratio: 16/9;
+    overflow: hidden;
+    background: var(--steel);
+    cursor: pointer;
+    display: block;
+    text-decoration: none;
+  }
+  .reel-cell::after {
+    content: '';
+    position: absolute; inset: 0;
+    background: linear-gradient(to top, rgba(10,10,11,.7) 0%, transparent 50%);
+    transition: opacity .3s;
+  }
+  .reel-cell:hover::after { opacity: 0; }
+
+  /* Simulated cinematic stills via gradients */
+  .reel-cell:nth-child(1) .reel-visual {
+    background: linear-gradient(135deg, #0D2137 0%, #1a3a5c 40%, #c8a96e33 100%);
+  }
+  .reel-cell:nth-child(2) .reel-visual {
+    background: linear-gradient(160deg, #1a0e08 0%, #3d2010 50%, #c8692022 100%);
+  }
+  .reel-cell:nth-child(3) .reel-visual {
+    background: linear-gradient(120deg, #080d1a 0%, #0f1f33 60%, #3a6ea822 100%);
+  }
+  .reel-cell:nth-child(4) .reel-visual {
+    background: linear-gradient(200deg, #0a1008 0%, #1c2d12 60%, #a8c87022 100%);
+  }
+  .reel-cell:nth-child(5) .reel-visual {
+    background: linear-gradient(45deg, #1a0a20 0%, #2d1540 60%, #9b6ec822 100%);
+  }
+  .reel-cell:nth-child(6) .reel-visual {
+    background: linear-gradient(170deg, #110a00 0%, #2e1f00 60%, #c8a96e33 100%);
+  }
+  .reel-visual {
+    position: absolute; inset: 0;
+    display: flex; align-items: center; justify-content: center;
+    transition: transform .5s ease;
+  }
+  .reel-cell:hover .reel-visual { transform: scale(1.04); }
+
+  /* Aspect-ratio horizon lines inside each cell */
+  .reel-visual::before {
+    content: '';
+    position: absolute;
+    bottom: 35%; left: 8%; right: 8%;
+    height: 1px;
+    background: rgba(200,169,110,.25);
+  }
+
+  .reel-play {
+    position: absolute; inset: 0; z-index: 2;
+    display: flex; align-items: center; justify-content: center;
+    opacity: 0; transition: opacity .3s;
+  }
+  .reel-cell:hover .reel-play { opacity: 1; }
+  .play-icon {
+    width: 48px; height: 48px; border-radius: 50%;
+    background: rgba(200,169,110,.85);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .play-icon svg { width: 16px; height: 16px; margin-left: 3px; }
+
+  .reel-caption {
+    position: absolute; bottom: 1rem; left: 1rem; right: 1rem; z-index: 2;
+    font-family: var(--mono);
+    font-size: .6rem;
+    letter-spacing: .15em;
+    text-transform: uppercase;
+    color: rgba(232,228,218,.55);
+  }
+
+  /* ── SERVICES ── */
+  .services {
+    padding: 6rem 4rem;
+    border-top: 1px solid rgba(255,255,255,.05);
+  }
+  .section-header {
+    display: flex; justify-content: space-between; align-items: flex-end;
+    margin-bottom: 4rem;
+  }
+  .section-title {
+    font-family: var(--display);
+    font-size: clamp(2.8rem, 6vw, 5.5rem);
+    line-height: 1;
+    letter-spacing: .01em;
+  }
+  .section-note {
+    font-family: var(--mono);
+    font-size: .65rem;
+    letter-spacing: .2em;
+    color: var(--mist);
+    text-transform: uppercase;
+    max-width: 28ch;
+    text-align: right;
+    line-height: 1.7;
+  }
+  .services-list { display: flex; flex-direction: column; gap: 0; }
+  .service-row {
+    display: grid;
+    grid-template-columns: 3rem 1fr auto;
+    align-items: center;
+    gap: 2.5rem;
+    padding: 2rem 0;
+    border-bottom: 1px solid rgba(255,255,255,.06);
+    cursor: default;
+    transition: background .2s;
+  }
+  .service-row:hover { background: rgba(255,255,255,.02); }
+  .service-num {
+    font-family: var(--mono);
+    font-size: .65rem;
+    color: var(--horizon);
+    letter-spacing: .1em;
+  }
+  .service-name {
+    font-family: var(--display);
+    font-size: clamp(1.5rem, 3.5vw, 2.8rem);
+    letter-spacing: .03em;
+    color: var(--white);
+  }
+  .service-tag {
+    font-family: var(--mono);
+    font-size: .6rem;
+    letter-spacing: .2em;
+    text-transform: uppercase;
+    color: var(--mist);
+    border: 1px solid rgba(138,138,153,.25);
+    padding: .35rem .8rem;
+    white-space: nowrap;
+  }
+
+  /* ── STATS ── */
+  .stats {
+    padding: 5rem 4rem;
+    background: var(--smoke);
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2px;
+    border-top: 1px solid rgba(255,255,255,.05);
+  }
+  .stat-cell {
+    padding: 3rem 2rem;
+    background: var(--steel);
+    text-align: center;
+  }
+  .stat-value {
+    font-family: var(--display);
+    font-size: clamp(2.8rem, 5vw, 4.5rem);
+    color: var(--horizon);
+    line-height: 1;
+  }
+  .stat-label {
+    font-family: var(--mono);
+    font-size: .6rem;
+    letter-spacing: .2em;
+    text-transform: uppercase;
+    color: var(--mist);
+    margin-top: .7rem;
+    line-height: 1.6;
+  }
+
+  /* ── CONTACT ── */
+  .contact {
+    padding: 7rem 4rem 5rem;
+    border-top: 1px solid rgba(255,255,255,.05);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6rem;
+    align-items: start;
+  }
+  .contact-headline {
+    font-family: var(--display);
+    font-size: clamp(2.5rem, 6vw, 5rem);
+    line-height: .95;
+    letter-spacing: .01em;
+  }
+  .contact-headline span {
+    display: block;
+    color: var(--horizon);
+  }
+  .contact-body {
+    font-size: .95rem;
+    line-height: 1.7;
+    color: var(--mist);
+    margin-top: 1.5rem;
+  }
+
+  .contact-form { display: flex; flex-direction: column; gap: 1.2rem; }
+  .field-group { display: flex; flex-direction: column; gap: .45rem; }
+  .field-group label {
+    font-family: var(--mono);
+    font-size: .6rem;
+    letter-spacing: .2em;
+    text-transform: uppercase;
+    color: var(--mist);
+  }
+  .field-group input,
+  .field-group textarea,
+  .field-group select {
+    background: var(--steel);
+    border: 1px solid rgba(255,255,255,.08);
+    color: var(--white);
+    font-family: var(--body);
+    font-size: .9rem;
+    font-weight: 300;
+    padding: .85rem 1rem;
+    outline: none;
+    transition: border-color .2s;
+    width: 100%;
+    -webkit-appearance: none;
+  }
+  .field-group input:focus,
+  .field-group textarea:focus,
+  .field-group select:focus {
+    border-color: var(--horizon);
+  }
+  .field-group textarea { resize: vertical; min-height: 120px; }
+  .field-group select option { background: var(--steel); }
+
+  .form-submit {
+    margin-top: .8rem;
+    padding: 1rem 2.5rem;
+    background: var(--horizon);
+    color: var(--ink);
+    font-family: var(--mono);
+    font-size: .72rem;
+    letter-spacing: .2em;
+    text-transform: uppercase;
+    border: none;
+    cursor: pointer;
+    transition: opacity .2s;
+    align-self: flex-start;
+  }
+  .form-submit:hover { opacity: .85; }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--smoke);
+    border-top: 1px solid rgba(255,255,255,.05);
+    padding: 2.5rem 4rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .footer-logo {
+    font-family: var(--mono);
+    font-size: .65rem;
+    letter-spacing: .25em;
+    color: var(--horizon);
+    text-transform: uppercase;
+  }
+  .footer-socials { display: flex; gap: 2rem; }
+  .footer-socials a {
+    font-family: var(--mono);
+    font-size: .6rem;
+    letter-spacing: .15em;
+    text-transform: uppercase;
+    color: var(--mist);
+    text-decoration: none;
+    transition: color .2s;
+  }
+  .footer-socials a:hover { color: var(--white); }
+  .footer-copy {
+    font-family: var(--mono);
+    font-size: .6rem;
+    color: rgba(138,138,153,.4);
+    letter-spacing: .1em;
+  }
+
+  /* ── SCROLL REVEAL ── */
+  .reveal {
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity .7s ease, transform .7s ease;
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: none;
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    nav { padding: 1.2rem 1.5rem; }
+    .nav-links { gap: 1.5rem; }
+    .hero { padding: 0 1.5rem 4rem; }
+    .reel { padding: 4rem 1.5rem; }
+    .reel-grid { grid-template-columns: 1fr 1fr; }
+    .services { padding: 4rem 1.5rem; }
+    .section-header { flex-direction: column; align-items: flex-start; gap: 1rem; }
+    .section-note { text-align: left; }
+    .stats { grid-template-columns: repeat(2, 1fr); padding: 3rem 1.5rem; }
+    .contact { grid-template-columns: 1fr; gap: 3rem; padding: 5rem 1.5rem 4rem; }
+    footer { padding: 2rem 1.5rem; flex-direction: column; gap: 1.2rem; text-align: center; }
+    .footer-socials { justify-content: center; }
+  }
+
+  @media (max-width: 580px) {
+    .reel-grid { grid-template-columns: 1fr; }
+    .stats { grid-template-columns: 1fr 1fr; }
+    .service-row { grid-template-columns: 2.5rem 1fr; }
+    .service-tag { display: none; }
+    .nav-links { display: none; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .reveal { opacity: 1; transform: none; }
+    .reel-cell:hover .reel-visual { transform: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">TJ — Cinematographer</div>
+  <ul class="nav-links">
+    <li><a href="#work">Work</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="horizon-glow"></div>
+  <div class="horizon-line"></div>
+
+  <!-- HUD crosshair -->
+  <div class="hud" aria-hidden="true">
+    <svg viewBox="0 0 380 380" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="190" cy="190" r="188" stroke="#C8A96E" stroke-width="1"/>
+      <circle cx="190" cy="190" r="120" stroke="#C8A96E" stroke-width=".5" stroke-dasharray="4 8"/>
+      <circle cx="190" cy="190" r="55" stroke="#C8A96E" stroke-width=".5"/>
+      <line x1="0" y1="190" x2="130" y2="190" stroke="#C8A96E" stroke-width=".5"/>
+      <line x1="250" y1="190" x2="380" y2="190" stroke="#C8A96E" stroke-width=".5"/>
+      <line x1="190" y1="0" x2="190" y2="130" stroke="#C8A96E" stroke-width=".5"/>
+      <line x1="190" y1="250" x2="190" y2="380" stroke="#C8A96E" stroke-width=".5"/>
+      <text x="202" y="184" font-family="Space Mono" font-size="8" fill="#C8A96E" opacity=".7">N 34°03'</text>
+      <text x="202" y="198" font-family="Space Mono" font-size="8" fill="#C8A96E" opacity=".7">W 118°14'</text>
+    </svg>
+  </div>
+
+  <div class="hero-eyebrow">Cinematographer · Drone Pilot · Visual Storyteller</div>
+  <h1 class="hero-headline">Every<br>Frame<br>is a <em>World</em></h1>
+  <p class="hero-sub">From 400 feet or from the floor — I find the angle that makes the viewer forget they're watching a screen.</p>
+  <div class="hero-ctas">
+    <a href="#work" class="btn-primary">View Reel</a>
+    <a href="#contact" class="btn-ghost">Book a Project</a>
+  </div>
+</section>
+
+<!-- REEL / PORTFOLIO -->
+<section class="reel reveal" id="work">
+  <div class="reel-label">Selected Work</div>
+  <div class="reel-grid">
+
+    <a class="reel-cell" href="https://drive.google.com/file/d/1Cz0-5vc-sFtTa4Rlm--6UTaN9TjchtXk/view" target="_blank" rel="noopener">
+      <div class="reel-visual"></div>
+      <div class="reel-play">
+        <div class="play-icon">
+          <svg viewBox="0 0 16 16" fill="#0A0A0B"><polygon points="4,2 14,8 4,14"/></svg>
+        </div>
+      </div>
+      <div class="reel-caption">Michelle @10</div>
+    </a>
+
+    <a class="reel-cell" href="https://drive.google.com/file/d/1N5QYQ8xTlaYe6tJHqzIlgKTw2tE5I5uX/view" target="_blank" rel="noopener">
+      <div class="reel-visual"></div>
+      <div class="reel-play">
+        <div class="play-icon">
+          <svg viewBox="0 0 16 16" fill="#0A0A0B"><polygon points="4,2 14,8 4,14"/></svg>
+        </div>
+      </div>
+      <div class="reel-caption">Silk Party</div>
+    </a>
+
+    <a class="reel-cell" href="https://drive.google.com/file/d/1nXoZLYUfp-wSLcA_18TnYyaTs5qC5Rf8/view" target="_blank" rel="noopener">
+      <div class="reel-visual"></div>
+      <div class="reel-play">
+        <div class="play-icon">
+          <svg viewBox="0 0 16 16" fill="#0A0A0B"><polygon points="4,2 14,8 4,14"/></svg>
+        </div>
+      </div>
+      <div class="reel-caption">Interview Session</div>
+    </a>
+
+    <a class="reel-cell" href="https://drive.google.com/file/d/1cO87Jt5hwkRo9iBuiw_AGHohGJaJU6_s/view" target="_blank" rel="noopener">
+      <div class="reel-visual"></div>
+      <div class="reel-play">
+        <div class="play-icon">
+          <svg viewBox="0 0 16 16" fill="#0A0A0B"><polygon points="4,2 14,8 4,14"/></svg>
+        </div>
+      </div>
+      <div class="reel-caption">Matic Final</div>
+    </a>
+
+    <a class="reel-cell" href="https://drive.google.com/file/d/1L1Ho50J7Ebl2Fia3NRo_bWsfrgJ8ymtT/view" target="_blank" rel="noopener">
+      <div class="reel-visual"></div>
+      <div class="reel-play">
+        <div class="play-icon">
+          <svg viewBox="0 0 16 16" fill="#0A0A0B"><polygon points="4,2 14,8 4,14"/></svg>
+        </div>
+      </div>
+      <div class="reel-caption">Bed Video</div>
+    </a>
+
+    <a class="reel-cell" href="https://drive.google.com/file/d/118cFsE7Ha5dXVnN9fBImJ4iIX30x25ja/view" target="_blank" rel="noopener">
+      <div class="reel-visual"></div>
+      <div class="reel-play">
+        <div class="play-icon">
+          <svg viewBox="0 0 16 16" fill="#0A0A0B"><polygon points="4,2 14,8 4,14"/></svg>
+        </div>
+      </div>
+      <div class="reel-caption">Smart Switches</div>
+    </a>
+
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="services reveal" id="services">
+  <div class="section-header">
+    <h2 class="section-title">What I Do</h2>
+    <p class="section-note">End-to-end production or a single day's camera — built around your project.</p>
+  </div>
+  <div class="services-list">
+    <div class="service-row">
+      <span class="service-num">01</span>
+      <span class="service-name">Aerial Cinematography</span>
+      <span class="service-tag">Drone · NCAA Certified</span>
+    </div>
+    <div class="service-row">
+      <span class="service-num">02</span>
+      <span class="service-name">Documentary & Narrative</span>
+      <span class="service-tag">Short · Long-form</span>
+    </div>
+    <div class="service-row">
+      <span class="service-num">03</span>
+      <span class="service-name">Real Estate & Architecture</span>
+      <span class="service-tag">Aerial · Walkthrough</span>
+    </div>
+    <div class="service-row">
+      <span class="service-num">04</span>
+      <span class="service-name">Events & Live Coverage</span>
+      <span class="service-tag">Multi-cam · Same-day</span>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats reveal">
+  <div class="stat-cell">
+    <div class="stat-value">120+</div>
+    <div class="stat-label">Projects<br>Completed</div>
+  </div>
+  <div class="stat-cell">
+    <div class="stat-value">5</div>
+    <div class="stat-label">Years In<br>The Field</div>
+  </div>
+  <div class="stat-cell">
+    <div class="stat-value">4K</div>
+    <div class="stat-label">Max Aerial<br>Resolution</div>
+  </div>
+  <div class="stat-cell">
+    <div class="stat-value">NCAA</div>
+    <div class="stat-label">Piloting<br>Certified</div>
+  </div>
+</div>
+
+<!-- CONTACT -->
+<section class="contact reveal" id="contact">
+  <div>
+    <h2 class="contact-headline">Let's Make<br><span>Something<br>Cinematic</span></h2>
+    <p class="contact-body">
+      Tell me about your project — what you're shooting, when, and what you're going for. I'll get back to you within 24 hours with availability and a rough rate.
+    </p>
+  </div>
+
+  <div class="contact-form">
+    <div class="field-group">
+      <label for="name">Your Name</label>
+      <input type="text" id="name" placeholder="Full name">
+    </div>
+    <div class="field-group">
+      <label for="email">Email</label>
+      <input type="email" id="email" placeholder="you@example.com">
+    </div>
+    <div class="field-group">
+      <label for="service">Project Type</label>
+      <select id="service">
+        <option value="" disabled selected>Select a service</option>
+        <option>Aerial Cinematography</option>
+        <option>Documentary & Narrative</option>
+        <option>Real Estate & Architecture</option>
+        <option>Events & Live Coverage</option>
+        <option>Other</option>
+      </select>
+    </div>
+    <div class="field-group">
+      <label for="message">Tell Me About It</label>
+      <textarea id="message" placeholder="Location, dates, vision..."></textarea>
+    </div>
+    <button class="form-submit" onclick="handleSubmit()">Send Message →</button>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">Teniola Jimoh — Cinematographer</div>
+  <div class="footer-socials">
+    <a href="#">Instagram</a>
+    <a href="#">Vimeo</a>
+    <a href="#">LinkedIn</a>
+  </div>
+  <div class="footer-copy">© 2026</div>
+</footer>
+
+<script>
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); }
+    });
+  }, { threshold: 0.12 });
+  reveals.forEach(el => io.observe(el));
+
+  // Form stub
+  function handleSubmit() {
+    const name = document.getElementById('name').value.trim();
+    const email = document.getElementById('email').value.trim();
+    if (!name || !email) { alert('Please fill in your name and email.'); return; }
+    alert('Message sent! I\'ll be in touch within 24 hours.');
+  }
+</script>
+</body>
+</html>
