@@ -234,14 +234,15 @@
   }
   .reel-cell:hover .reel-visual { transform: scale(1.04); }
 
-  /* Aspect-ratio horizon lines inside each cell */
-  .reel-visual::before {
-    content: '';
-    position: absolute;
-    bottom: 35%; left: 8%; right: 8%;
-    height: 1px;
-    background: rgba(200,169,110,.25);
+  /* Drive video thumbnails */
+  .reel-cell iframe {
+    position: absolute; inset: 0;
+    width: 100%; height: 100%;
+    border: none;
+    pointer-events: none;
   }
+  .reel-cell:hover iframe { pointer-events: auto; }
+  .reel-visual { display: none; }
 
   .reel-play {
     position: absolute; inset: 0; z-index: 2;
@@ -551,65 +552,35 @@
   <div class="reel-label">Selected Work</div>
   <div class="reel-grid">
 
-    <a class="reel-cell" href="https://drive.google.com/file/d/1Cz0-5vc-sFtTa4Rlm--6UTaN9TjchtXk/view" target="_blank" rel="noopener">
-      <div class="reel-visual"></div>
-      <div class="reel-play">
-        <div class="play-icon">
-          <svg viewBox="0 0 16 16" fill="#0A0A0B"><polygon points="4,2 14,8 4,14"/></svg>
-        </div>
-      </div>
+    <div class="reel-cell">
+      <iframe src="https://drive.google.com/file/d/1Cz0-5vc-sFtTa4Rlm--6UTaN9TjchtXk/preview" allow="autoplay" allowfullscreen></iframe>
       <div class="reel-caption">Michelle @10</div>
-    </a>
+    </div>
 
-    <a class="reel-cell" href="https://drive.google.com/file/d/1N5QYQ8xTlaYe6tJHqzIlgKTw2tE5I5uX/view" target="_blank" rel="noopener">
-      <div class="reel-visual"></div>
-      <div class="reel-play">
-        <div class="play-icon">
-          <svg viewBox="0 0 16 16" fill="#0A0A0B"><polygon points="4,2 14,8 4,14"/></svg>
-        </div>
-      </div>
+    <div class="reel-cell">
+      <iframe src="https://drive.google.com/file/d/1N5QYQ8xTlaYe6tJHqzIlgKTw2tE5I5uX/preview" allow="autoplay" allowfullscreen></iframe>
       <div class="reel-caption">Silk Party</div>
-    </a>
+    </div>
 
-    <a class="reel-cell" href="https://drive.google.com/file/d/1nXoZLYUfp-wSLcA_18TnYyaTs5qC5Rf8/view" target="_blank" rel="noopener">
-      <div class="reel-visual"></div>
-      <div class="reel-play">
-        <div class="play-icon">
-          <svg viewBox="0 0 16 16" fill="#0A0A0B"><polygon points="4,2 14,8 4,14"/></svg>
-        </div>
-      </div>
+    <div class="reel-cell">
+      <iframe src="https://drive.google.com/file/d/1nXoZLYUfp-wSLcA_18TnYyaTs5qC5Rf8/preview" allow="autoplay" allowfullscreen></iframe>
       <div class="reel-caption">Interview Session</div>
-    </a>
+    </div>
 
-    <a class="reel-cell" href="https://drive.google.com/file/d/1cO87Jt5hwkRo9iBuiw_AGHohGJaJU6_s/view" target="_blank" rel="noopener">
-      <div class="reel-visual"></div>
-      <div class="reel-play">
-        <div class="play-icon">
-          <svg viewBox="0 0 16 16" fill="#0A0A0B"><polygon points="4,2 14,8 4,14"/></svg>
-        </div>
-      </div>
+    <div class="reel-cell">
+      <iframe src="https://drive.google.com/file/d/1cO87Jt5hwkRo9iBuiw_AGHohGJaJU6_s/preview" allow="autoplay" allowfullscreen></iframe>
       <div class="reel-caption">Matic Final</div>
-    </a>
+    </div>
 
-    <a class="reel-cell" href="https://drive.google.com/file/d/1L1Ho50J7Ebl2Fia3NRo_bWsfrgJ8ymtT/view" target="_blank" rel="noopener">
-      <div class="reel-visual"></div>
-      <div class="reel-play">
-        <div class="play-icon">
-          <svg viewBox="0 0 16 16" fill="#0A0A0B"><polygon points="4,2 14,8 4,14"/></svg>
-        </div>
-      </div>
+    <div class="reel-cell">
+      <iframe src="https://drive.google.com/file/d/1L1Ho50J7Ebl2Fia3NRo_bWsfrgJ8ymtT/preview" allow="autoplay" allowfullscreen></iframe>
       <div class="reel-caption">Bed Video</div>
-    </a>
+    </div>
 
-    <a class="reel-cell" href="https://drive.google.com/file/d/118cFsE7Ha5dXVnN9fBImJ4iIX30x25ja/view" target="_blank" rel="noopener">
-      <div class="reel-visual"></div>
-      <div class="reel-play">
-        <div class="play-icon">
-          <svg viewBox="0 0 16 16" fill="#0A0A0B"><polygon points="4,2 14,8 4,14"/></svg>
-        </div>
-      </div>
+    <div class="reel-cell">
+      <iframe src="https://drive.google.com/file/d/118cFsE7Ha5dXVnN9fBImJ4iIX30x25ja/preview" allow="autoplay" allowfullscreen></iframe>
       <div class="reel-caption">Smart Switches</div>
-    </a>
+    </div>
 
   </div>
 </section>
@@ -705,9 +676,8 @@
 <footer>
   <div class="footer-logo">Teniola Jimoh — Cinematographer</div>
   <div class="footer-socials">
-    <a href="#">Instagram</a>
-    <a href="#">Vimeo</a>
-    <a href="#">LinkedIn</a>
+    <a href="https://www.instagram.com/tenitechvoid/" target="_blank" rel="noopener">Instagram</a>
+    <a href="https://www.tiktok.com/@teniola.00" target="_blank" rel="noopener">TikTok</a>
   </div>
   <div class="footer-copy">© 2026</div>
 </footer>
