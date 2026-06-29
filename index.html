@@ -692,12 +692,46 @@
   }, { threshold: 0.12 });
   reveals.forEach(el => io.observe(el));
 
-  // Form stub
-  function handleSubmit() {
-    const name = document.getElementById('name').value.trim();
-    const email = document.getElementById('email').value.trim();
-    if (!name || !email) { alert('Please fill in your name and email.'); return; }
-    alert('Message sent! I\'ll be in touch within 24 hours.');
+  // Formspree contact form
+  async function handleSubmit() {
+    const name    = document.getElementById('name').value.trim();
+    const email   = document.getElementById('email').value.trim();
+    const service = document.getElementById('service').value;
+    const message = document.getElementById('message').value.trim();
+
+    if (!name || !email) {
+      alert('Please fill in your name and email.');
+      return;
+    }
+
+    const btn = document.querySelector('.form-submit');
+    btn.textContent = 'Sending...';
+    btn.disabled = true;
+
+    try {
+      const res = await fetch('https://formspree.io/f/mojoldqn', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify({ name, email, service, message })
+      });
+
+      if (res.ok) {
+        btn.textContent = 'Message Sent ✓';
+        btn.style.background = '#4CAF50';
+        document.getElementById('name').value = '';
+        document.getElementById('email').value = '';
+        document.getElementById('service').value = '';
+        document.getElementById('message').value = '';
+      } else {
+        btn.textContent = 'Failed — Try Again';
+        btn.style.background = '#c0392b';
+        btn.disabled = false;
+      }
+    } catch (err) {
+      btn.textContent = 'Failed — Try Again';
+      btn.style.background = '#c0392b';
+      btn.disabled = false;
+    }
   }
 </script>
 </body>
